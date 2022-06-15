@@ -3,8 +3,13 @@ import React from 'react'
 import { getSession, useSession } from "next-auth/client";
 import Head from "next/head";
 import Header from "../../components/Header";
+import Hero from "../../components/Hero";
+import Image from "next/image";
 
 function Movie({ result }) {
+const [session] = useSession();
+const BASE_URL = "https://image.tmdb.org/t/p/original/";
+
   return (
     <div>
       <Head>
@@ -12,6 +17,24 @@ function Movie({ result }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
+      {!session ? (
+        <Hero />
+      ) : (
+        <section className="relative z-50">
+            <div className="relative min-h-[calc(100vh-72px)]">
+            <Image
+                src={
+                 `${BASE_URL}${result.backdrop_path || result.poster_path}` ||
+                 `${BASE_URL}${result.poster_path}`
+                }
+                  layout="fill"
+                objectFit="cover"
+            />
+
+            </div>
+        </section>
+      )
+}
     </div>
   )
 }
