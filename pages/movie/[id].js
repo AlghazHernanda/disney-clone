@@ -1,14 +1,16 @@
 //page ini berfungsi untuk movie detail karena ngambil dari id
-import React from 'react'
+import { useState } from 'react'
 import { getSession, useSession } from "next-auth/client";
 import Head from "next/head";
 import Header from "../../components/Header";
 import Hero from "../../components/Hero";
 import Image from "next/image";
+import { PlusIcon } from '@heroicons/react/solid';
 
 function Movie({ result }) {
 const [session] = useSession();
 const BASE_URL = "https://image.tmdb.org/t/p/original/";
+const [showPlayer, setShowPlayer] = useState(false);
 
   return (
     <div>
@@ -65,7 +67,23 @@ const BASE_URL = "https://image.tmdb.org/t/p/original/";
                         </span>
                     </button>
 
+                    <div className="rounded-full border-2 border-white flex items-center justify-center w-11 h-11 cursor-pointer bg-black/60">
+                        <PlusIcon className="h-6" />
+                    </div>
+
+                    
+                    <div className="rounded-full border-2 border-white flex items-center justify-center w-11 h-11 cursor-pointer bg-black/60">
+                        <img src="/images/group-icon.svg" alt="" />
+                    </div>
                 </div>
+
+                <p className="text-xs md:text-sm">
+                    {result.release_date || result.first_air_date} •{" "}
+                    {Math.floor(result.runtime / 60)}h {result.runtime % 60}m •{" "}
+                    {result.genres.map((genre) => genre.name + " ")}{" "}
+                </p>
+                <h4 className="text-sm md:text-lg max-w-4xl">{result.overview}</h4>
+
             </div>
           
         </section>
