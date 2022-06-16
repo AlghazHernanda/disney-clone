@@ -6,11 +6,16 @@ import Header from "../../components/Header";
 import Hero from "../../components/Hero";
 import Image from "next/image";
 import { PlusIcon, XIcon } from '@heroicons/react/solid';
+import ReactPlayer from "react-player/lazy";
 
 function Movie({ result }) {
 const [session] = useSession();
 const BASE_URL = "https://image.tmdb.org/t/p/original/";
 const [showPlayer, setShowPlayer] = useState(false);
+
+const index = result.videos.results.findIndex(
+  (element) => element.type === "Trailer"
+);
 
   return (
     <div>
@@ -103,6 +108,17 @@ const [showPlayer, setShowPlayer] = useState(false);
                   >
                     <XIcon className="h-5" />
                   </div>
+                </div>
+
+                <div className="relative pt-[56.25%]">
+                  <ReactPlayer
+                    url={`https://www.youtube.com/watch?v=${result.videos?.results[index]?.key}`}
+                    width="100%"
+                    height="100%"
+                    style={{ position: "absolute", top: "0", left: "0" }}
+                    controls={true}
+                    playing={showPlayer}
+                  />
                 </div>
               </div>
           
