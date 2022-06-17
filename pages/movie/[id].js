@@ -7,11 +7,21 @@ import Hero from "../../components/Hero";
 import Image from "next/image";
 import { PlusIcon, XIcon } from '@heroicons/react/solid';
 import ReactPlayer from "react-player/lazy";
+import { useRouter } from 'next/router';
+
 
 function Movie({ result }) {
 const [session] = useSession();
 const BASE_URL = "https://image.tmdb.org/t/p/original/";
 const [showPlayer, setShowPlayer] = useState(false);
+const router = useRouter();
+
+//agar saat logout waktu sedang liat movie detail, url akan berubah menjadi /
+useEffect(() => {
+  if (!session) {
+    router.push("/");
+  }
+}, []);
 
 const index = result.videos.results.findIndex(
   (element) => element.type === "Trailer"
