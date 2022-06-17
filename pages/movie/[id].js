@@ -1,5 +1,5 @@
 //page ini berfungsi untuk movie detail karena ngambil dari id
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { getSession, useSession } from "next-auth/client";
 import Head from "next/head";
 import Header from "../../components/Header";
